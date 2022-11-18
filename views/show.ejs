@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar sticky-top  navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand text-white">Exchange APP</a>
+        <form class="form-inline" action="/login" method="POST">
+          <input class="form-control mr-sm-2" name="username" type="search" placeholder="User" >
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        </form>
+      </nav>
+    
+    <div class="d-flex justify-content-center">
+
+    <div class="w-25 ">
+    <% for (let i=0; i<currentAccount.amount.length;i+=1) {%>
+                <div class="card mt-3 text-white bg-info">
+                    <h5 class="card-header text-warning" >Expense shared with <%=currentAccount.peer[i]  %> </h5>
+                    <div class="card-body">
+                    <h5 class="card-title">Total Expense &#x20B9;<%=currentAccount.amount[i]  %> </h5>
+                    <p class="card-text font-weight-bold">Paid by you &#x20B9;<%=currentAccount.share[i]  %> </p>
+                    <p class="card-text font-weight-bold"><%=currentAccount.peer[i]  %> owes &#x20B9;<%=currentAccount.peerShare[i]  %></p>
+                    </div>
+                </div>  
+
+    <% } %>
+    </div>
+    <div class="w-25 mt-3 d-flex justify-content-center">
+
+        <form action=<%=`/create/${currentAccount.username}` %> method="POST" >
+            <h5 class="text-primary">Create a new Expense</h5>
+
+            <div class="form-group">
+              <label for="peerUsername">Username</label>
+              <input type="text" required="true" class="form-control" id="peerUsername" name="peerUsername" placeholder="Enter username">
+              <small class="form-text text-muted">username of the user you want to share this expense with.</small>
+            </div>
+            <div class="form-group">
+                <label for="totalAmount">Expense(&#x20B9;)</label>
+                <input type="number" name="expense" required="true" min="1" max="100000" class="form-control" id="totalAmount" placeholder="Total expense">
+              </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" required="true" type="radio" name="shareType" id="inlineRadio1" checked value="amount">
+                <label class="form-check-label" for="inlineRadio1">&#x20B9;</label>
+              </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" required="true" type="radio" name="shareType" id="inlineRadio2" value="percentage">
+                <label class="form-check-label" for="inlineRadio2">%</label>
+            </div>
+            <div class="form-group">
+                <label for="peerShare"></label>
+                <input type="number" name="peerShare"  min="1" max="100000" required="true" class="form-control" id="peerShare" placeholder="expense of the other user">
+              </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+          </form>
+    </div>
+        
+    
+    </div>
+        
+    <script src="/scripts/create.js"></script>
+</body>
+</html>
